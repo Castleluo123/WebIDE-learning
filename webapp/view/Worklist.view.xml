@@ -1,0 +1,107 @@
+<mvc:View	xmlns="sap.m" 
+			xmlns:mvc="sap.ui.core.mvc" 
+			xmlns:semantic="sap.f.semantic" 
+			xmlns:footerbar="sap.ushell.ui.footerbar"
+			xmlns:core="sap.ui.core"
+			
+	controllerName="zappleif008.zappleif008.controller.Worklist">
+	<PagingButton count="5" id="__button2"/>
+	<sap.ui.core:Icon xmlns:sap.ui.core="sap.ui.core" src="sap-icon://doctor" size="2em" id="__icon2"/>
+	<IconTabBar selectedKey="__filter6" id="__bar0">
+		<items>
+			<IconTabSeparator id="__separator1"/>
+			<IconTabFilter text="Orders" count="22" showAll="true" id="__filter6">
+				<content>
+					<List noDataText="No data" id="__list2">
+						<items>
+							<StandardListItem title="List Item 1" id="__item7"/>
+							<StandardListItem title="List Item 2" id="__item8"/>
+							<StandardListItem title="List Item 3" id="__item9"/></items>
+					</List>
+				</content>
+			</IconTabFilter>
+			<IconTabSeparator id="__separator5"/>
+			<IconTabFilter text="Open" count="10" icon="sap-icon://task" iconColor="Critical" id="__filter7"/>
+			<IconTabSeparator id="__separator2"/>
+			<IconTabFilter text="Shipped" count="5" icon="sap-icon://shipping-status" iconColor="Positive" id="__filter8"/></items>
+	</IconTabBar>
+	<semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false">
+		<semantic:titleHeading>
+			<Title text="{i18n>worklistTitle}"/>
+		</semantic:titleHeading>
+		<semantic:content>
+			<Table id="table" width="auto" items="{ path: '/VbakSet', sorter: { path: 'Angdt', descending: false } }"
+				noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+				updateFinished="onUpdateFinished">
+				<headerToolbar>
+					<Toolbar>
+						<!--<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>-->
+						<Label text="Sales Order"/>
+						<Input name="textVbeln" value='' valueLiveUpdate="true" width="10%"/>
+						<Label text="Sales Organization"/>
+						<Input name="textVkorg" value='' valueLiveUpdate="true" width="10%"/>
+						<Label text="create date"/>
+						<DatePicker id="beginDate" name="beginDate" dateValue="{/date}" width="15%"/>
+						<Label text="to"/>
+						<DatePicker id="endDate" name="endDate" dateValue="{/date}" width="15%"/>
+						<Label text="Currency"/>
+						<Select id="textWaerk" name="textWaerk" change="onSelect">
+							<core:Item key="CNY" text="RMB"/>
+							<core:Item key="EUR" text="Euro"/>
+							<core:Item key="USD" text="US$"/>
+						</Select>
+						<Button text="Serach" press="onClick"/>
+						
+						<!--<SearchField id="SalesOrder" tooltip="{i18n>worklistSearchTooltip}" search="onSearch" width="auto"/>-->
+						<!--<ToolbarSpacer/>-->
+						<!--<SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search="onSearch" width="auto"/>-->
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column id="Kunnr">
+						<Title text="{i18n>tableKunnrTitle}" id="KunnrTitle"/>
+					</Column>
+					<Column id="Vbeln">
+						<Text text="{i18n>tableVbelnTitle}" id="VbelnTitle"/>
+					</Column>
+					<Column id="Erdat">
+						<Text text="{i18n>tableErdatTitle}" id="ErdatTitle"/>
+					</Column>
+					<Column id="Waerk">
+						<Text text="{i18n>tableWaerkTitle}" id="WaerkTitle"/>
+					</Column>
+					<Column id="unitNumberColumn" hAlign="End">
+						<Text text="{i18n>tableUnitNumberColumnTitle}" id="unitNumberColumnTitle"/>
+					</Column>
+					<Column id="__column2">
+						<header>
+							<Label text="{/#Vbak/Vkorg/@sap:label}" id="__label2"/>
+						</header>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation" press="onPress">
+						<cells>
+							<ObjectIdentifier title="{Kunnr}"/>
+							<ObjectIdentifier title="{Vbeln}"/>
+							<ObjectIdentifier title="{Erdat}"/>
+							<ObjectIdentifier title="{Waerk}"/>
+							<ObjectNumber number="{ path: 'Netwr', formatter: '.formatter.numberUnit' }" unit="{Ktext}"/>
+							<Input value="{Vkorg}" width="100%" id="__input2"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press="onShareInJamPress"/>
+		</semantic:shareInJamAction>
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton id="shareTile" title="{worklistView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+	</semantic:SemanticPage>
+	<sap.ui.core:Icon xmlns:sap.ui.core="sap.ui.core" src="sap-icon://doctor" size="2em" id="__icon1" busyIndicatorSize="Large"/>
+</mvc:View>
