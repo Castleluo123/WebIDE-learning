@@ -1,0 +1,77 @@
+<mvc:View controllerName="zappleif010.zappleif010.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar">
+	<semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false">
+		<semantic:titleHeading>
+			<Title text="{i18n>worklistTitle}"/>
+		</semantic:titleHeading>
+		<semantic:content>
+			<Table id="table" width="auto" items="{ path: '/VbakSet', sorter: { path: 'Ktext', descending: false } }"
+				noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+				updateFinished="onUpdateFinished">
+				<headerToolbar>
+					<Toolbar>
+						<!--<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>-->
+						<!--<ToolbarSpacer/>-->
+						<!--<SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search="onSearch" width="auto"></SearchField>-->
+						<Label text="Sales Order"/>
+						<Input name="textVbeln" value='' valueLiveUpdate="true" width="10%"/>
+						<Label text="Sales Organization"/>
+						<Input name="textVkorg" value='' valueLiveUpdate="true" width="10%"/>
+						<Label text="create date"/>
+						<DatePicker id="beginDate" name="beginDate" dateValue="{/date}" width="15%"/>
+						<Label text="to"/>
+						<DatePicker id="endDate" name="endDate" dateValue="{/date}" width="15%"/>
+						<Label text="Currency"/>
+						<Select id="textWaerk" name="textWaerk" change="onSelect">
+							<core:Item key="" text=""/>
+							<core:Item key="CNY" text="RMB"/>
+							<core:Item key="EUR" text="Euro"/>
+							<core:Item key="USD" text="US$"/>
+						</Select>
+						<Button text="Serach" press="onPress1"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<!--<Column id="nameColumn"><Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/></Column>-->
+					<Column ><Text text="{i18n>columnVbeln}" id="Vbeln"/></Column>
+					<Column ><Text text="{i18n>columnErdat}" id="Erdat"/></Column>
+					<Column ><Text text="{i18n>columnAngdt}" id="Angdt"/></Column>
+					<Column ><Text text="{i18n>columnNetwr}" id="Netwr"/></Column>
+					<Column ><Text text="{i18n>columnWaerk}" id="Waerk"/></Column>
+					<Column ><Text text="{i18n>columnVkorg}" id="Vkorg"/></Column>
+					<Column ><Text text="{i18n>columnVkgrp}" id="Vkgrp"/></Column>
+					<Column ><Text text="{i18n>columnKtext}" id="Ktext"/></Column>
+					<Column ><Text text="{i18n>columnKunnr}" id="Kunnr"/></Column>
+					<Column ><Text text="{i18n>columnCmgst}" id="Cmgst"/></Column>
+					<Column id="unitNumberColumn" hAlign="End"><Text text="{i18n>tableUnitNumberColumnTitle}" id="unitNumberColumnTitle"/></Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation" press="onPress">
+						<cells>
+							<ObjectIdentifier title="{Vbeln}"/>
+							<ObjectIdentifier title="{Erdat}"/>
+							<ObjectIdentifier title="{Angdt}"/>
+							<ObjectIdentifier title="{Netwr}"/>
+							<ObjectIdentifier title="{Waerk}"/>
+							<ObjectIdentifier title="{Vkorg}"/>
+							<ObjectIdentifier title="{Vkgrp}"/>
+							<ObjectIdentifier title="{Ktext}"/>
+							<ObjectIdentifier title="{Kunnr}"/>
+							<ObjectIdentifier title="{Cmgst}"/>
+							<ObjectNumber number="{ path: 'Netwr', formatter: '.formatter.numberUnit' }" unit="{Waerk}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press="onShareInJamPress"/>
+		</semantic:shareInJamAction>
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton id="shareTile" title="{worklistView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+	</semantic:SemanticPage>
+</mvc:View>

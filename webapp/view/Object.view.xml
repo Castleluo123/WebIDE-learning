@@ -1,0 +1,63 @@
+<mvc:View controllerName="zappleif010.zappleif010.controller.Object" xmlns:m="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:uiTable="sap.ui.table">
+	<semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false" busy="{objectView>/busy}"
+		busyIndicatorDelay="{objectView>/delay}">
+		<semantic:titleHeading>
+			<m:Title text="{Vbeln}"/>
+		</semantic:titleHeading>
+		<semantic:headerContent>
+			<m:ObjectIdentifier title="{Vbeln}"/>
+			<m:ObjectIdentifier title="{Erdat}"/>
+			<m:ObjectIdentifier title="{Angdt}"/>
+			<m:ObjectIdentifier title="{Netwr}"/>
+			<m:ObjectIdentifier title="{Waerk}"/>
+			<m:ObjectIdentifier title="{Vkorg}"/>
+			<m:ObjectIdentifier title="{Vkgrp}"/>
+			<m:ObjectIdentifier title="{Ktext}"/>
+			<m:ObjectIdentifier title="{Kunnr}"/>
+			<m:ObjectNumber number="{ path: 'Netwr', formatter: '.formatter.numberUnit' }" numberUnit="{Waerk}"/>
+		</semantic:headerContent>
+		<m:Panel headerText="Sales Order-Vbak">
+			<m:content>
+				<m:ObjectAttribute title="Sales Order" text="{Vbeln}" id="Vbeln"/>
+				<m:ObjectAttribute title="Create On" text="{Erdat}" id="Erdat"/>
+				<m:ObjectAttribute title="Effective Date" text="{Angdt}" id="Angdt"/>
+				<m:ObjectAttribute title="Net Amount" text="{Netwr}" id="Netwr"/>
+			</m:content>
+		</m:Panel>
+		
+		<m:Panel backgroundDesign="Translucent" headerText="Itemlist" id="item">
+			<m:content>
+				<uiTable:Table id="itemTable" selectionMode="MultiToggle" visibleRowCount="7" endbleSelectALL="False" rows="{ path:'Vbap2Set' }"
+					threshould="15" enableBusyIndicator="true" arialabelledBy="title">
+					<uiTable:noData>
+						<m:Text text="No data now"/>
+					</uiTable:noData>
+					<uiTable:toolbar>
+						<m:ToolbarSpacer/>
+						<m:Button icon="sap-icon://refresh" tooltip="Reinitialize Model" press="onModelfresh"/>
+					</uiTable:toolbar>
+					<uiTable:columns>
+						<uiTable:Column width="11rem">
+							<m:Label text="Sales Doc."/>
+							<uiTable:template>
+								<m:Text text="{Vbeln}"/>
+							</uiTable:template>
+						</uiTable:Column>
+					</uiTable:columns>
+				</uiTable:Table>
+			</m:content>
+		</m:Panel>
+		
+		
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press="onShareInJamPress"/>
+		</semantic:shareInJamAction>
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton id="shareTile" title="{objectView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+	</semantic:SemanticPage>
+</mvc:View>
